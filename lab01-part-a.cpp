@@ -24,27 +24,24 @@ void printFoods(string*, const unsigned);
 *******************************************************************************/
 
 int main() {
-    // variables
-    string*  dynArr   = nullptr;
-    unsigned userSize = 0;
+    string*  dynArr   = nullptr;                                                        // Intializes the dynamic array for the food items to go into
+    unsigned userSize = 0;                                                              // Size of dynArry (Initialized by user)
 
-    // get the size for the array from user
-    // validation: must not exceed 10
-    do {
-        cout << "Enter your desired array size: ";
-        cin >> userSize;
-    } while (userSize > 10);
 
-    // TODO: create the dynamic memory
+    do {                                                                                // Do while to make sure it runs atleast once
+        cout << "Enter your desired array size (Must be less than 10): ";               // Print the message to get the size of dynArrray
+        cin >> userSize;                                                                // Get the inputted size
+    } while (userSize > 10 || userSize <= 0);                                           // Make sure its < 10 and > 0 (If not, repeat the message and get another input)
 
-    // call the functions
-    populate(dynArr, userSize);
-    printFoods(dynArr, userSize);
+    dynArr = new string[userSize];                                                      // Intialize the new memory and give the pointer to dynArray
 
-    // TODO: release the dynamic memory to avoid a memory leak
 
-    // terminate
-    return 0;
+    populate(dynArr, userSize);                                                         // Populate dynArrray
+    printFoods(dynArr, userSize);                                                       // Print the inputted foods
+
+    delete[] dynArr;                                                                    // Release memory to avoid memory leak
+
+    return 0;                                                                           // End code
 }
 
 /*******************************************************************************
@@ -61,7 +58,11 @@ int main() {
 *******************************************************************************/
 
 void populate(string* arrPtr, const unsigned ARR_SIZE) {
-    // TODO
+    for (int i = 0; i < ARR_SIZE; i++) {                                                // For loop to fill the array
+        cout << "Enter food order #" << i+1 << ": ";                                    // Prompt sent to user to input food
+        getline(cin >> ws, arrPtr[i]);                                                  // Get input back and set the currenyt position of arrPtr to it (cin >> ws makes sure the new line from the last cin doesn't affect the input)
+                                                                                        // (getline makes sure that multiple words are included)
+    }
 }
 
 /*******************************************************************************
@@ -79,5 +80,14 @@ void populate(string* arrPtr, const unsigned ARR_SIZE) {
 *******************************************************************************/
 
 void printFoods(string* arrPtr, const unsigned ARR_SIZE) {
-    // TODO
+    for (int i = 0; i < ARR_SIZE; i++) {                                                // For loop to iterate through the array and print the info
+        cout << "****************************************" << endl;                     // Seperator
+        cout << "Food Order #" << i+1 << endl;                                          // Food order number
+        cout << arrPtr[i] << endl;                                                      // Food item attributed to order number
+        cout << &arrPtr[i] << endl;                                                     // Pointer where food item is stored
+        cout << "****************************************" << endl;                     // Seperator
+        cout << endl;
+    }
+    
+    
 }
